@@ -1,0 +1,41 @@
+{
+  "equipment": {
+    "id": "unique",
+    "type": "Extintor|Mangueira",
+    "building": "string",
+    "floor": "string",
+    "environment": "string",
+    "coordinates": "{x,y,z}|null",
+    "status": "enum",
+    "lastInspection": "date|null",
+    "lastMaintenance": "date|null",
+    "nextAction": "string",
+    "priority": "enum",
+    "photos": [],
+    "history": []
+  },
+  "inspection": {
+    "id": "uuid",
+    "date": "datetime",
+    "responsible": "string",
+    "scope": "string",
+    "findings": [],
+    "limitations": []
+  },
+  "finding": {
+    "id": "uuid",
+    "equipmentId": "string",
+    "severity": "CRITICA|ALTA|MEDIA|BAIXA|INFORMATIVA",
+    "evidence": "string",
+    "verification": "VISUAL|DOCUMENTAL|PRESENCIAL|ENSAIO",
+    "recommendation": "string"
+  },
+  "audit": {
+    "timestamp": "datetime",
+    "actor": "user",
+    "action": "string",
+    "entity": "string",
+    "before": "json|null",
+    "after": "json|null"
+  }
+}
