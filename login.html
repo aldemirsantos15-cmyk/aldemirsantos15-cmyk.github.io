@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inspeção 3D — Login</title>
+<meta name="description" content="Sistema de gestão de segurança contra incêndio">
+<meta name="theme-color" content="#0b2638">
+<style>
+:root{--nav:#0b2638;--bg:#f5f7fa;--card:#fff;--ink:#17222c;--muted:#687682;--line:#e0e7f1;--accent:#f07818;--ok:#2e7d32;--bad:#c62828;--shadow:0 2px 8px rgba(0,0,0,0.08);--shadow-md:0 4px 16px rgba(0,0,0,0.12)}
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{margin:0;background:linear-gradient(135deg,var(--nav) 0%,#051e2f 100%);font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-container{width:100%;max-width:420px;animation:slideUp 0.5s ease-out}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.login-card{background:var(--card);border-radius:16px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1)}
+.logo-area{text-align:center;margin-bottom:32px}
+.logo-icon{font-size:56px;margin-bottom:12px}
+.logo-title{font-size:28px;font-weight:900;color:var(--nav);margin:0}
+.logo-subtitle{font-size:13px;color:var(--muted);margin:6px 0 0}
+.form-group{margin-bottom:18px}
+label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+input,select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink);transition:all 0.2s}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(240,120,24,0.1)}
+.form-group.role select{cursor:pointer}
+.remember{display:flex;align-items:center;gap:8px;font-size:13px;margin:16px 0}
+input[type="checkbox"]{width:auto;cursor:pointer}
+.btn-login{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent) 0%,#e26600 100%);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;transition:all 0.3s;margin-top:8px;box-shadow:0 4px 12px rgba(240,120,24,0.3)}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,120,24,0.4)}
+.btn-login:active{transform:translateY(0)}
+.divider{text-align:center;margin:24px 0;font-size:12px;color:var(--muted)}
+.demo-section{background:#f8fafb;border-radius:10px;padding:14px;margin-bottom:16px}
+.demo-title{font-size:11px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
+.demo-user{padding:8px 0;font-size:12px;border-bottom:1px solid var(--line)}
+.demo-user:last-child{border:none}
+.demo-user-name{font-weight:700;color:var(--ink)}
+.demo-user-role{color:var(--muted);font-size:11px;margin-top:2px}
+.error{background:#fde5e5;border:1px solid #f8a8a8;color:var(--bad);padding:12px;border-radius:6px;font-size:13px;margin-bottom:16px;display:none;animation:shake 0.3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.success{background:#dcf5e3;border:1px solid #9cdb9e;color:var(--ok);padding:12px;border-radius:6px;font-size:13px;margin-bottom:16px;display:none}
+.footer{text-align:center;margin-top:20px;font-size:11px;color:var(--muted)}>
+</style></head>
+<body>
+
+<div class="login-container">
+  <div class="login-card">
+    <div class="logo-area">
+      <div class="logo-icon">🔒</div>
+      <h1 class="logo-title">INSPEÇÃO 3D</h1>
+      <p class="logo-subtitle">Gestão de Segurança contra Incêndio</p>
+    </div>
+
+    <div class="error" id="error"></div>
+    <div class="success" id="success"></div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="username">Usuário</label>
+        <input type="text" id="username" placeholder="Digite seu usuário" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha" required>
+      </div>
+
+      <div class="form-group role">
+        <label for="role">Perfil</label>
+        <select id="role" required>
+          <option value="">Selecione um perfil...</option>
+          <option value="admin">👤 Administrador</option>
+          <option value="gestor">👔 Gestor</option>
+          <option value="inspetor">🔍 Inspetor</option>
+          <option value="leitor">👁️ Leitor (Consulta)</option>
+        </select>
+      </div>
+
+      <div class="remember">
+        <input type="checkbox" id="remember">
+        <label for="remember" style="margin:0">Manter-me conectado</label>
+      </div>
+
+      <button type="submit" class="btn-login">🔓 Acessar Sistema</button>
+    </form>
+
+    <div class="divider">─ Credenciais de Demonstração ─</div>
+
+    <div class="demo-section">
+      <div class="demo-title">Usuários de teste:</div>
+      <div class="demo-user">
+        <div class="demo-user-name">admin / admin123</div>
+        <div class="demo-user-role">Perfil: Administrador</div>
+      </div>
+      <div class="demo-user">
+        <div class="demo-user-name">gestor / gestor123</div>
+        <div class="demo-user-role">Perfil: Gestor</div>
+      </div>
+      <div class="demo-user">
+        <div class="demo-user-name">inspetor / inspetor123</div>
+        <div class="demo-user-role">Perfil: Inspetor</div>
+      </div>
+      <div class="demo-user">
+        <div class="demo-user-name">leitor / leitor123</div>
+        <div class="demo-user-role">Perfil: Leitor</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Versão 1.0 • © 2026 Inspeção 3D
+    </div>
+  </div>
+</div>
+
+<script>
+const USERS = {
+  admin: {password: 'admin123', role: 'admin', name: 'Administrador'},
+  gestor: {password: 'gestor123', role: 'gestor', name: 'Gestor de Operações'},
+  inspetor: {password: 'inspetor123', role: 'inspetor', name: 'Inspetor Técnico'},
+  leitor: {password: 'leitor123', role: 'leitor', name: 'Leitor de Dados'}
+};
+
+const ROLES = {
+  admin: {label: 'Administrador', icon: '👤', color: '#c62828'},
+  gestor: {label: 'Gestor', icon: '👔', color: '#1565c0'},
+  inspetor: {label: 'Inspetor', icon: '🔍', color: '#2e7d32'},
+  leitor: {label: 'Leitor', icon: '👁️', color: '#b98500'}
+};
+
+function handleLogin(event) {
+  event.preventDefault();
+  
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const selectedRole = document.getElementById('role').value;
+  const remember = document.getElementById('remember').checked;
+  
+  const errorDiv = document.getElementById('error');
+  const successDiv = document.getElementById('success');
+  
+  errorDiv.style.display = 'none';
+  successDiv.style.display = 'none';
+  
+  // Validar credenciais
+  if (!USERS[username]) {
+    errorDiv.textContent = '❌ Usuário não encontrado';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  if (USERS[username].password !== password) {
+    errorDiv.textContent = '❌ Senha incorreta';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  if (USERS[username].role !== selectedRole) {
+    errorDiv.textContent = '❌ Perfil não corresponde ao usuário';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  // Login bem-sucedido
+  successDiv.textContent = '✅ Login realizado com sucesso! Redirecionando...';
+  successDiv.style.display = 'block';
+  
+  // Salvar sessão
+  const session = {
+    username: username,
+    role: selectedRole,
+    name: USERS[username].name,
+    loginTime: new Date().toISOString(),
+    remember: remember
+  };
+  
+  localStorage.setItem('session', JSON.stringify(session));
+  
+  // Redirecionar
+  setTimeout(() => {
+    window.location.href = 'dashboard.html';
+  }, 1500);
+}
+
+// Verificar se já está logado
+window.addEventListener('load', () => {
+  const session = JSON.parse(localStorage.getItem('session'));
+  if (session && (session.remember || new Date() - new Date(session.loginTime) < 3600000)) {
+    window.location.href = 'dashboard.html';
+  }
+});
+</script>
+
+</body></html>
